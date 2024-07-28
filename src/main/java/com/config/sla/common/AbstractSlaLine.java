@@ -15,29 +15,21 @@ import java.util.stream.IntStream;
 @SuperBuilder
 @Slf4j
 @Getter
-public abstract class AbstractSlaLine<T ,R> {
+public abstract class AbstractSlaLine<T ,R> extends AbstractSlaContext<T> {
 
     private final TreeMap<String,Object> context;
     private final Integer weight ;
     private final ResultSla<R> result;
     private final Class<T> type;
 
-    public AbstractSlaLine( ResultSla<R> result, Class<T> type,TreeMap<String,Object> context) {
+
+    public AbstractSlaLine(ResultSla<R> result, Class<T> type, T slaLineInstance) {
+        super(null,slaLineInstance);
         this.type = type;
         this.result = result;
-        this.context = context;
+        this.context = getAllFields(slaLineInstance);
         this.weight = calculateWeight(context);
-    }
 
-    @SneakyThrows
-    public TreeMap<String, Object> getAllFields(T object) {
-        TreeMap<String, Object> fieldMap = new TreeMap<>() ;
-        Field[] fields = type.getDeclaredFields();
-        for (Field field : fields) {
-            Object value = field.get(object);
-            fieldMap.put(field.getName(),value);
-        }
-        return fieldMap;
     }
 
     public  Integer calculateWeight(TreeMap<String,Object> contextFields){

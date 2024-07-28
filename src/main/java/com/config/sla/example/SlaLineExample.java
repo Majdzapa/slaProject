@@ -10,8 +10,8 @@ import java.util.TreeMap;
 @ToString
 public  class SlaLineExample extends AbstractSlaLine<ModelSlaExample,ResultTypeExample> {
 
-    public SlaLineExample(ResultSla<ResultTypeExample> result, Class<ModelSlaExample> type, TreeMap<String, Object> context) {
-        super(result, type, context);
+    public SlaLineExample(ResultSla<ResultTypeExample> result, Class<ModelSlaExample> type, ModelSlaExample slaLineInstance) {
+        super(result, type,slaLineInstance);
 
 
     }

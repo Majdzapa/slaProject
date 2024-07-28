@@ -1,11 +1,6 @@
 package com.config.sla;
 
-import com.config.sla.common.AbstractSlaLine;
-import com.config.sla.common.ReflectionUtils;
-import com.config.sla.example.ModelSlaExample;
-import com.config.sla.example.ResultTypeExample;
-import com.config.sla.example.SlaLineExample;
-import com.config.sla.example.SlaProcessorExample;
+import com.config.sla.example.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.List;
 
 import static com.config.sla.utility.SlaUtility.createSlaLineExample;
+import static com.config.sla.utility.SlaUtility.createSlaModelExample;
 
 @SpringBootApplication
 @Slf4j
@@ -30,6 +26,9 @@ public class SlaApplication {
 
 		ResultTypeExample rt = processor.calculateResult();
 
+
+		ModelSlaExample model = createSlaModelExample("MAJD",null,20,"notif1") ;
+		SlaContextExample context = new SlaContextExample(null,model);
 		System.out.println(rt.toString());
 	}
 
