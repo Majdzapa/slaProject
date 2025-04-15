@@ -1,33 +1,36 @@
+
 package com.config.sla.common;
 
-import lombok.SneakyThrows;
 import lombok.experimental.SuperBuilder;
-
+import lombok.SneakyThrows;
 import java.lang.reflect.Field;
 import java.util.TreeMap;
 
 @SuperBuilder
-public class AbstractSlaContext <T>{
+public abstract class AbstractSlaContext<T> {
 
-    private final TreeMap<String,Object> context;
+    private final TreeMap<String, Object> context;
     private final T slaLineInstance;
 
     public AbstractSlaContext(TreeMap<String, Object> context, T slaLineInstance) {
-
         this.slaLineInstance = slaLineInstance;
-        this.context = getAllFields(slaLineInstance);
+        this.context = context != null ? context : getAllFields(slaLineInstance);
     }
 
     @SneakyThrows
     public static <T> TreeMap<String, Object> getAllFields(T instance) {
-        TreeMap<String, Object> fieldMap = new TreeMap<>() ;
+        TreeMap<String, Object> fieldMap = new TreeMap<>();
+        if (instance == null) return fieldMap;
+        
         Class<?> clazz = instance.getClass();
-        Field[] fields = clazz.getDeclaredFields();
-        for (Field field : fields) {
+        for (Field field : clazz.getDeclaredFields()) {
             field.setAccessible(true);
-            Object value = field.get(instance);
-            fieldMap.put(field.getName(),value);
+            fieldMap.put(field.getName(), field.get(instance));
         }
         return fieldMap;
+    }
+
+    public TreeMap<String, Object> getContext() {
+        return context;
     }
 }
