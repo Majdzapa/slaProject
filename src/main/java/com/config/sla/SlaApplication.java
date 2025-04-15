@@ -9,6 +9,7 @@ import java.util.List;
 
 import static com.config.sla.utility.SlaUtility.createSlaLineExample;
 import static com.config.sla.utility.SlaUtility.createSlaModelExample;
+import com.config.sla.common.AbstractSlaLine;
 
 @SpringBootApplication
 @Slf4j
@@ -36,7 +37,7 @@ public class SlaApplication {
 		// Example 3: Custom SLA Line
 		log.info("Example 3: Custom SLA Line");
 		CustomSlaLine<ModelSlaExample, ResultTypeExample> customLine = new CustomSlaLine<>(
-			AbstractSlaLine.ResultSla.<ResultTypeExample>builder()
+			com.config.sla.common.AbstractSlaLine.ResultSla.<ResultTypeExample>builder()
 				.result(ResultTypeExample.builder().notificationName("custom_notif").build())
 				.build(),
 			ModelSlaExample.class,
