@@ -25,8 +25,23 @@ public class SlaApplication {
 		SlaLineExample l3 = createSlaLineExample(null, null, 20, "notif3");
 
 		SlaProcessorExample processor = new SlaProcessorExample(List.of(l1, l2, l3));
-		ResultTypeExample rt = processor.calculateResult();
-		log.info("Result 1: {}", rt);
+		
+		// Test with empty context
+		ResultTypeExample rt1 = processor.calculateResult();
+		log.info("Result with empty context: {}", rt1);
+		
+		// Test with matching context
+		TreeMap<String, Object> matchingContext = new TreeMap<>();
+		matchingContext.put("name", "MAJD");
+		matchingContext.put("age", 20);
+		ResultTypeExample rt2 = processor.calculateResult(matchingContext);
+		log.info("Result with matching context: {}", rt2);
+		
+		// Test with partial matching context
+		TreeMap<String, Object> partialContext = new TreeMap<>();
+		partialContext.put("age", 20);
+		ResultTypeExample rt3 = processor.calculateResult(partialContext);
+		log.info("Result with partial context: {}", rt3);
 
 		// Example 2: SLA Context with Model
 		log.info("Example 2: SLA Context with Model");
